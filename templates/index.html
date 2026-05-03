@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Predictor | AI-Powered Real Estate Estimator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 House Price Predictor</h1>
+            <p>AI-Powered Real Estate Price Estimation</p>
+        </div>
+
+        <div class="content">
+            <form method="POST" action="/predict">
+                <div class="form-section">
+                    <h2 class="section-title">📐 Property Characteristics</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Overall Quality (1-10)</label>
+                            <input type="number" name="overall_qual" min="1" max="10" value="7" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Overall Condition (1-10)</label>
+                            <input type="number" name="overall_cond" min="1" max="10" value="5" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Year Built</label>
+                            <input type="number" name="year_built" min="1900" max="2024" value="2003" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Living Area (sq ft)</label>
+                            <input type="number" name="gr_liv_area" min="300" max="10000" value="1710" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Lot Area (sq ft)</label>
+                            <input type="number" name="lot_area" min="500" max="100000" value="8450" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Neighborhood</label>
+                            <select name="neighborhood">
+                                <option value="CollgCr">College Creek</option>
+                                <option value="Veenker">Veenker</option>
+                                <option value="Crawfor">Crawford</option>
+                                <option value="NoRidge">North Ridge</option>
+                                <option value="Somerst">Somerset</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">🛋️ Interior Features</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Bedrooms</label>
+                            <input type="number" name="bedrooms" min="0" max="8" value="3" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Bathrooms</label>
+                            <input type="number" name="full_bath" min="0" max="5" value="2" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Half Bathrooms</label>
+                            <input type="number" name="half_bath" min="0" max="3" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fireplaces</label>
+                            <input type="number" name="fireplaces" min="0" max="4" value="1" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">🚗 Exterior Features</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Garage Cars</label>
+                            <input type="number" name="garage_cars" min="0" max="4" value="2" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Garage Area (sq ft)</label>
+                            <input type="number" name="garage_area" min="0" max="2000" value="548" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Basement Area (sq ft)</label>
+                            <input type="number" name="basement_sf" min="0" max="3000" value="856" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kitchen Quality</label>
+                            <select name="kitchen_qual">
+                                <option value="Ex">Excellent</option>
+                                <option value="Gd" selected>Good</option>
+                                <option value="TA">Typical</option>
+                                <option value="Fa">Fair</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="predict-btn">🔮 Predict House Price</button>
+            </form>
+
+            {% if prediction %}
+            <div class="result show">
+                <div class="price-label">Estimated Market Value</div>
+                <div class="price">${{ "{:,.0f}".format(prediction) }}</div>
+            </div>
+            {% endif %}
+
+            <div class="info-box">
+                <h3>💡 How It Works</h3>
+                <div>
+                    <span class="feature-tag">Size & Layout</span>
+                    <span class="feature-tag">Construction Quality</span>
+                    <span class="feature-tag">Location Factors</span>
+                    <span class="feature-tag">Modern Amenities</span>
+                </div>
+                <p style="margin-top: 10px;">Based on real estate data and machine learning algorithms.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
